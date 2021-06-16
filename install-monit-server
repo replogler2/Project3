@@ -1,0 +1,22 @@
+#! /bin/bash
+
+## initialize log file
+touch monit-install-log
+
+##install prerequisite software
+yum install sendmail epel-release monit -y
+
+## download monitrc config file
+wget https://raw.githubusercontent.com/replogler2/Project3/78cf3f4f32ba6dac2230b432d9ef8f565e691be1/monitrc-server | tee -a monit-install-log
+
+## rename monitrc file for server
+cp monitrc-server monitrc | tee -a monit-install-log
+
+## remove template monitrc file from server
+rm /etc/monitrc | tee -a monit-install-log
+
+## move monitrc to /etc folder
+cp monitrc /etc/ | tee -a monit-install-log
+
+## restart monit service
+monit reload
